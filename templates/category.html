@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>One Dash Event – Категорії коктейлів</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="background-grid">
+    <header>
+        <img src="{{ url_for('static', filename='logo-small.png') }}" class="logo-small" alt="Logo">
+        <h1>One Dash Event</h1>
+    </header>
+
+    <nav>
+        <a href="/" class="button">Головна</a>
+        <a href="/cocktails" class="button">Усі коктейлі</a>
+        <a href="/glass" class="button">Посуд</a>
+        <a href="/ingredients" class="button">Інгредієнти</a>
+    </nav>
+
+    <h1 class="title">Категорії коктейлів</h1>
+
+    {% if cocktails %}
+    <main class="cocktail-list">
+        {% for c in cocktails %}
+            <a href="{{ url_for('cocktail_detail', name=c.name) }}" class="cocktail-card-link">
+                <div class="cocktail-card">
+                    <img src="{{ url_for('static', filename='images/' + c.image) }}" alt="{{ c.name }}">
+                    <h3>{{ c.name }}</h3>
+                    <p>Категорія: {{ c.category }}</p>
+                    <p>Міцність: {{ c.strength }}</p>
+                    <p>Посуд: {{ c.glass }}</p>
+                    <p>Інгредієнти: {{ c.ingredients | join(', ') }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </main>
+    {% else %}
+        <p style="text-align:center;">Оберіть категорію, щоб переглянути коктейлі.</p>
+    {% endif %}
+</body>
+</html>

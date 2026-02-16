@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Категорії коктейлів</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="background-grid">
+    <header>
+        <img src="{{ url_for('static', filename='logo-small.png') }}" class="logo-small" alt="Logo">
+        <h1>One Dash Event</h1>
+    </header>
+
+    <nav>
+        <a href="/" class="button">Головна</a>
+        <a href="/cocktails" class="button">Усі коктейлі</a>
+        <a href="/glass" class="button">Посуд</a>
+        <a href="/search/event" class="button">Категорія</a>
+        <a href="/search/ingredients" class="button">Інгредієнти</a>
+    </nav>
+
+    <h1 class="title">Категорії коктейлів</h1>
+    <p style="text-align:center; margin:20px;">
+        Оберіть категорію, щоб переглянути коктейлі для вашої події.
+    </p>
+
+    <main class="card-list">
+        {% for cat in categories %}
+        <a href="{{ url_for('category_detail', name=cat.name) }}" class="card-link">
+            <div class="cocktail-card">
+                <img src="{{ url_for('static', filename='images/' + cat.image) }}" alt="{{ cat.name }}">
+                <h3>{{ cat.name }}</h3>
+                <p>{{ cat.description }}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </main>
+</body>
+</html>

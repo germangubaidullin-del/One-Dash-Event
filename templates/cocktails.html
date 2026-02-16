@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Усі коктейлі</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="background-grid">
+    <header>
+        <img src="{{ url_for('static', filename='logo-small.png') }}" class="logo-small" alt="Logo">
+        <h1>One Dash Event</h1>
+    </header>
+
+    <nav>
+        <a href="/" class="button">Головна</a>
+        <a href="/cocktails" class="button">Усі коктейлі</a>
+        <a href="/glass" class="button">Посуд</a>
+        <a href="/search/event" class="button">Категорія</a>
+        <a href="/search/ingredients" class="button">Інгредієнти</a>
+    </nav>
+
+    <h1 class="title">Коктейлі</h1>
+
+    <main class="card-list">
+        {% for c in cocktails %}
+        <a href="{{ url_for('cocktail_detail', name=c.name) }}" class="card-link">
+            <div class="cocktail-card">
+                <img src="{{ url_for('static', filename='images/' + c.image) }}" alt="{{ c.name }}">
+                <h3>{{ c.name }}</h3>
+                <p>Категорія: {{ c.category }}</p>
+                <p>Міцність: {{ c.strength }}</p>
+                <p>Інгредієнти: {{ c.ingredients | join(', ') }}</p>
+            </div>
+        </a>
+        {% endfor %}
+    </main>
+
+    <!-- Пагінація -->
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{{ url_for('cocktails_page', page=page-1) }}" class="button">« Попередня</a>
+        {% endif %}
+
+        {% for p in range(1, total_pages + 1) %}
+            {% if p == page %}
+                <span class="active">{{ p }}</span>
+            {% else %}
+                <a href="{{ url_for('cocktails_page', page=p) }}">{{ p }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page < total_pages %}
+            <a href="{{ url_for('cocktails_page', page=page+1) }}" class="button">Наступна »</a>
+        {% endif %}
+    </div>
+</body>
+</html>

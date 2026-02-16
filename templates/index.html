@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>One Dash Event – Головна</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <nav>
+        
+         <a href="/cocktails" class="button">Усі коктейлі</a>
+         <a href="/glass" class="button">Посуд</a>
+         <a href="/search/event" class="button">Категорія</a>
+         <a href="/search/ingredients" class="button">Інгредієнти</a>
+    </nav>
+
+    <!-- Hero секція -->
+    <section class="hero" style="background-image: url('{{ url_for("static", filename="logo-large.png") }}');">
+        <div class="overlay"></div>
+        <div class="hero-text">
+            <h1>One Dash Event</h1>
+            <h2>Вітаємо у світі маленьких акцентів та великих змістів.</h2>
+            <p>Цей портал допоможе вам створити ту саму атмосферу.</p>
+        </div>
+    </section>
+
+</body>
+</html> 

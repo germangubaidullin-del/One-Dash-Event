@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Інгредієнти</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="background-grid">
+    <header>
+        <img src="{{ url_for('static', filename='logo-small.png') }}" class="logo-small" alt="Logo">
+        <h1>One Dash Event</h1>
+    </header>
+
+    <nav>
+        <a href="/" class="button">Головна</a>
+        <a href="/cocktails" class="button">Усі коктейлі</a>
+        <a href="/glass" class="button">Посуд</a>
+        <a href="/search/event" class="button">Категорія</a>
+        <a href="/search/ingredients" class="button">Інгредієнти</a>
+    </nav>
+
+    <h1 class="title">Інгредієнти</h1>
+    <p style="text-align:center; margin:20px;">
+        Оберіть тип інгредієнтів, щоб переглянути їх картки.
+    </p>
+
+    <main class="card-list">
+        {% for t in types %}
+        <a href="{{ url_for('ingredients_by_type', type_name=t) }}" class="card-link">
+            <div class="cocktail-card">
+                <h3>{{ t }}</h3>
+            </div>
+        </a>
+        {% endfor %}
+    </main>
+</body>
+</html>

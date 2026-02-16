@@ -1,0 +1,8 @@
+Flask
+Jinja2
+Werkzeug
+JSON
+HTML
+CSS
+itsdangerous==2.1.2
+click==8.1.7

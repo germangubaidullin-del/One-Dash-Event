@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ glass.name }} – Коктейлі</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="background-grid">
+    <header>
+        <img src="{{ url_for('static', filename='logo-small.png') }}" class="logo-small" alt="Logo">
+        <h1>One Dash Event</h1>
+    </header>
+
+    <nav>
+        <a href="/" class="button">Головна</a>
+        <a href="/cocktails" class="button">Усі коктейлі</a>
+        <a href="/glass" class="button">Посуд</a>
+        <a href="/search/event" class="button">Категорія</a>
+        <a href="/search/ingredients" class="button">Інгредієнти</a>
+    </nav>
+
+    <h1 class="title">{{ glass.name }}</h1>
+
+    <!-- Галерея фото -->
+    <div class="glass-gallery">
+        {% for img in glass.images %}
+            <img src="{{ url_for('static', filename='images/' + img) }}" alt="{{ glass.name }}">
+        {% endfor %}
+    </div>
+
+    <section class="glass-detail">
+    
+
+    <div class="glass-description">
+        <h2>{{ glass.name }}</h2>
+        <p>{{ glass.description }}</p>
+    </div>
+</section>
+
+    <!-- Коктейлі у цьому посуді -->
+   <h2 class="highlight">Коктейлі у {{ glass.name }}</h2>
+<main class="card-list">
+    {% for c in cocktails %}
+    <a href="{{ url_for('cocktail_detail', name=c.name) }}" class="card-link">
+        <div class="cocktail-card">
+            <img src="{{ url_for('static', filename='images/' + (c.image or 'placeholder.webp')) }}" alt="{{ c.name }}">
+            <h3>{{ c.name }}</h3>
+            <p>Категорія: {{ c.category }}</p>
+            <p>Міцність: {{ c.strength }}</p>
+            <p>Інгредієнти: {{ c.ingredients | join(', ') }}</p>
+        </div>
+    </a>
+    {% endfor %}
+    {% if cocktails|length == 0 %}
+        <p style="text-align:center;">Немає коктейлів для цього посуду.</p>
+    {% endif %}
+</main>
+</body>
+</html>

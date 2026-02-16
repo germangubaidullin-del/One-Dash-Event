@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ cocktail.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .cocktail-title {
+            font-size: 42px;
+            color: #daa520;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .cocktail-image {
+            display: block;
+            margin: 0 auto 20px auto;
+            max-width: 450px;
+            border-radius: 10px;
+        }
+        .cocktail-meta {
+            text-align: center;
+            margin: 15px 0;
+        }
+        .cocktail-meta a {
+            color: #cdfa05;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .cocktail-meta a:hover {
+            text-decoration: underline;
+        }
+        .cocktail-section {
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        .cocktail-section h3 {
+            color: #f5f5f5;
+            text-align: center;
+        }
+        .cocktail-section ul, .cocktail-section ol {
+            background: #111;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #222;
+        }
+    </style>
+</head>
+<body class="background-grid">
+    <header>
+        <img src="{{ url_for('static', filename='logo-small.png') }}" class="logo-small" alt="Logo">
+        <h1>One Dash Event</h1>
+    </header>
+
+    
+    <nav>
+         <a href="/" class="button">Головна</a>
+         <a href="/cocktails" class="button">Усі коктейлі</a>
+         <a href="/glass" class="button">Посуд</a>
+         <a href="/search/event" class="button">Категорія</a>
+         <a href="/ingredients" class="button">Інгредієнти</a>
+
+    </nav>
+    
+    <div class="back-link">
+    {% if request.referrer and 'category' in request.referrer %}
+        <a href="{{ url_for('category_detail', name=cocktail.category) }}">
+            ← Назад до категорії "{{ cocktail.category }}"
+        </a>
+    {% elif request.referrer and 'cocktails' in request.referrer %}
+        <a href="{{ url_for('cocktails_page') }}">
+            ← Назад до списку коктейлів
+        </a>
+    {% elif request.referrer and 'glass' in request.referrer %}
+        <a href="{{ url_for('glass_detail', name=cocktail.glass) }}">
+            ← Назад до посуду "{{ cocktail.glass }}"
+        </a>
+    {% else %}
+        <a href="javascript:history.back()">← Повернутися назад</a>
+    {% endif %}
+</div>
+
+    <main style="margin:20px;">
+        <h2 class="cocktail-title">{{ cocktail.name }}</h2>
+
+        <img src="{{ url_for('static', filename='images/' + cocktail.image) }}"
+             alt="{{ cocktail.name }}"
+             class="cocktail-image"
+             onerror="this.src='{{ url_for('static', filename='images/placeholder.webp') }}'">
+
+       <div class="cocktail-meta">
+    <p>Категорія:
+        <a href="{{ url_for('category_detail', name=cocktail.category) }}">
+            {{ cocktail.category }}
+        </a>
+    </p>
+    <p>Міцність: {{ cocktail.strength }}</p>
+    <p>Посуд:
+        <a href="{{ url_for('glass_detail', name=cocktail.glass) }}">
+            {{ cocktail.glass }}
+        </a>
+    </p>
+</div>
+
+        {% if cocktail.full_recipe %}
+        <div class="cocktail-section">
+            <h3>Інгредієнти:</h3>
+            <ul>
+                {% for ing in cocktail.full_recipe["ingredients"] %}
+                    <li>{{ ing["name"] }} – {{ ing["amount"] }}</li>
+                {% else %}
+                    <li>Немає інгредієнтів</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="cocktail-section">
+            <h3>Кроки:</h3>
+            <ol>
+                {% for step in cocktail.full_recipe["steps"] %}
+                    <li>{{ step }}</li>
+                {% else %}
+                    <li>Немає кроків</li>
+                {% endfor %}
+            </ol>
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>

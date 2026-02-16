@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Посуд</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="background-grid">
+    <header>
+        <img src="{{ url_for('static', filename='logo-small.png') }}" class="logo-small" alt="Logo">
+        <h1>One Dash Event</h1>
+    </header>
+
+    <nav>
+        <a href="/" class="button">Головна</a>
+        <a href="/cocktails" class="button">Усі коктейлі</a>
+        <a href="/glass" class="button">Посуд</a>
+        <a href="/search/event" class="button">Категорія</a>
+        <a href="/search/ingredients" class="button">Інгредієнти</a>
+    </nav>
+
+    <h1 class="title">Посуд</h1>
+  
+    <main class="card-list">
+        {% for g in glass %}
+        <a href="{{ url_for('glass_detail', name=g.name) }}" class="card-link">
+            <div class="cocktail-card">
+                <img src="{{ url_for('static', filename='images/' + g.images[0]) }}" alt="{{ g.name }}">
+                <h3>{{ g.name }}</h3>
+                {% for d in g.description %}
+                    <p>{{ d }}</p>
+                {% endfor %}
+            </div>
+        </a>
+        {% endfor %}
+    </main>
+</body>
+</html>
